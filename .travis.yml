@@ -1,6 +1,5 @@
 language: c
-compiler:
-  - gcc
-  - clang
-  
-script:  chmod -R 777 ./install-hhvm.sh
+compiler: gcc
+script: 
+  - chmod -R 777 ./install-hhvm.sh
+  - ./install-hhvm.sh
