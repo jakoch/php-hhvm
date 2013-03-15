@@ -1,1 +1,6 @@
-script: ./install-hhvm.sh
+language: c
+compiler:
+  - gcc
+  - clang
+  
+script:  chmod -R 777 ./install-hhvm.sh
