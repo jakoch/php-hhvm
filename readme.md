@@ -1,1 +1,1 @@
-HHVM
+HHVM - [![Build Status](https://travis-ci.org/jakoch/php-hhvm.png?branch=master)](https://travis-ci.org/jakoch/php-hhvm)
