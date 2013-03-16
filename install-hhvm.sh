@@ -111,6 +111,21 @@ function install_libunwind() {
 	echo -e "\n > Done. \n"
 }
 
+# libiconv
+function install_libiconv() {
+    echo -e "\n Installing libiconv. \n"
+	
+	wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+	tar xjvf libiconv-1.14.tar.gz
+	cd libiconv-1.14
+	./configure --prefix=$CMAKE_PREFIX_PATH
+	make && make install
+	cd ..
+	
+	echo -e "\n > Done. \n"
+}
+
+
 function build() {
     echo -e "\n Building HHVM. \n"
 	
@@ -132,7 +147,8 @@ function install() {
 		install_libcurl
 		install_googleglog
 		install_jemalloc 
-		install_libunwind	
+		install_libunwind
+		install_libiconv
 	build
 }
 
