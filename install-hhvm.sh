@@ -8,7 +8,8 @@
 
 # Install all package dependencies
 function install_dependencies() {
-    echo -n "Update & Install package dependencies."
+    echo -e "\n Update & Install package dependencies. \n"
+	
 	apt-get update -y
 	apt-get install -y git-core cmake g++ libboost-dev libmysqlclient-dev \
 	  libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
@@ -18,9 +19,13 @@ function install_dependencies() {
 	  libreadline-dev libncurses-dev libmemcached-dev libbz2-dev \
 	  libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
 	  libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev subversion
+	  
+	  echo -e "\n > Done. \n"
 }
 
 function get_hiphop_source() {
+    echo -e "\n Fetching hiphop-php.\n"
+	
 	mkdir dev
 	cd dev
 	git clone git://github.com/facebook/hiphop-php.git
@@ -30,11 +35,14 @@ function get_hiphop_source() {
 	export HPHP_LIB=`/bin/pwd`/bin
 	export USE_HHVM=1
 	cd ..
+	
+	echo -e "\n > Done. \n"
 }
 
 # libevent
 function install_libevent() {
-    echo "Installing libevent."
+    echo -e "Installing libevent.\n"
+	
 	git clone git://github.com/libevent/libevent.git
 	cd libevent
 	git checkout release-1.4.14b-stable
@@ -43,39 +51,69 @@ function install_libevent() {
 	./configure --prefix=$CMAKE_PREFIX_PATH
 	make && make install
     cd ..
+	
+	echo -e "\n > Done. \n"
 }
 
 # libCurl
 function install_libcurl() {
-    echo "Install curl."
+    echo -e "\n Installing curl. \n"
+	
     git clone git://github.com/bagder/curl.git
 	cd curl
 	./buildconf
 	./configure --prefix=$CMAKE_PREFIX_PATH
 	make && make install
 	cd ..
+	
+	echo -e "\n > Done. \n"
 }
 
 # google glog
 function install_googleglog() {
+    echo -e "\n Installing Google Glog. \n"
+	
 	svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog
 	cd google-glog
 	./configure --prefix=$CMAKE_PREFIX_PATH
 	make && make install
 	cd ..
+	
+	echo -e "\n > Done. \n"
 }
 
 # jemalloc
 function install_jemalloc() {
+    echo -e "\n Installing jemalloc. \n"
+	
 	wget http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
 	tar xjvf jemalloc-3.0.0.tar.bz2
 	cd jemalloc-3.0.0
 	./configure --prefix=$CMAKE_PREFIX_PATH
 	make && make install
 	cd ..
+	
+	echo -e "\n > Done. \n"
+}
+
+# libunwind
+function install_libunwind() {
+    echo -e "\n Installing libunwind. \n"
+	
+	wget http://download.savannah.gnu.org/releases/libunwind/libunwind-1.1.tar.gz
+    tar xvzf libunwind-1.1.tar.gz
+    cd libunwind-1.1
+    autoreconf -i -f
+    ./configure --prefix=$CMAKE_PREFIX_PATH
+    make && make install
+    cd ..
+	
+	echo -e "\n > Done. \n"
 }
 
 function build() {
+    echo -e "\n Building HHVM. \n"
+	
 	cd hiphop-php
 	git submodule init
 	git submodule update
@@ -83,15 +121,18 @@ function build() {
 	export HPHP_LIB=`pwd`/bin
 	cmake .
 	make
+	
+	echo -e "\n > Done. \n"
 }
 
 function install() {
     install_dependencies
 	get_hiphop_source
-	install_libevent
-    install_libcurl
-    install_googleglog
-    install_jemalloc   
+		install_libevent
+		install_libcurl
+		install_googleglog
+		install_jemalloc 
+		install_libunwind	
 	build
 }
 
