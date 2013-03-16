@@ -18,7 +18,7 @@ function install_dependencies() {
 	  libreadline-dev libncurses-dev libmemcached-dev libbz2-dev \
 	  libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
 	  libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev subversion
-)
+}
 
 function get_hiphop_source() {
 	mkdir dev
