@@ -10,8 +10,8 @@
 function install_dependencies() {
     echo -e "\n Update & Install package dependencies. \n"
 	
-	apt-get update -y
-	apt-get install -y git-core cmake g++ libboost-dev libmysqlclient-dev \
+	sudo apt-get update -y
+	sudo apt-get install -y git-core cmake g++ libboost-dev libmysqlclient-dev \
 	  libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
 	  libcap-dev libgd2-xpm-dev zlib1g-dev libtbb-dev libonig-dev libpcre3-dev \
 	  autoconf libtool libcurl4-openssl-dev libboost-system-dev \
