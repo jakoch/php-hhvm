@@ -159,6 +159,9 @@ ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hhvm/hhvm /usr/bin/hhvm
 
 ## Success
 echo "HipHop-PHP is now installed!"
-echo " > /usr/bin/hphp"
-echo " > /usr/bin/hhvm"
+
+## Fetch Version
+hphp -v
+hhvm -v
+
 exit 0
