@@ -4,6 +4,6 @@ script:
   - chmod -R 777 ./install-hhvm.sh
   - ./install-hhvm.sh
   
- notifications:
+notifications:
   irc: "irc.freenode.org#koch"
   email: false
