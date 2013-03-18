@@ -116,7 +116,7 @@ function install_libiconv() {
     echo -e "\n Installing libiconv. \n"
 
     wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
-    tar xjvf libiconv-1.14.tar.gz
+    tar xvzf libiconv-1.14.tar.gz
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH
     make && make install
