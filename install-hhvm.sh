@@ -6,6 +6,9 @@
 # https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.04
 #
 
+CPUS = $(cat /proc/cpuinfo | grep processor | wc -l)
+BE_NICE = $(ionice -c3 nice -n 19)
+
 # Install all package dependencies
 function install_dependencies() {
     echo -e "\n Update & Install package dependencies. \n"
@@ -31,7 +34,7 @@ function get_hiphop_source() {
 
     mkdir dev
     cd dev
-    git clone git://github.com/facebook/hiphop-php.git
+    git clone --depth 1 git://github.com/facebook/hiphop-php.git
     cd hiphop-php
     export CMAKE_PREFIX_PATH=`/bin/pwd`/..
     export HPHP_HOME=`/bin/pwd`
@@ -59,13 +62,13 @@ function install_libboost() {
 function install_libevent() {
     echo -e "Installing libevent.\n"
 
-    git clone git://github.com/libevent/libevent.git
+    git clone --depth 1 git://github.com/libevent/libevent.git
     cd libevent
     git checkout release-1.4.14b-stable
     cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1
     ./autogen.sh
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    make && make install
+    $BE_NICE make -j $CPUS && $BE_NICE make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -75,11 +78,11 @@ function install_libevent() {
 function install_libcurl() {
     echo -e "\n Installing curl. \n"
 
-    git clone git://github.com/bagder/curl.git
+    git clone --depth 1 git://github.com/bagder/curl.git
     cd curl
     ./buildconf
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    make && make install
+    $BE_NICE make -j $CPUS && $BE_NICE make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -92,7 +95,7 @@ function install_googleglog() {
     svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog
     cd google-glog
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    make && make install
+    $BE_NICE make -j $CPUS && $BE_NICE make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -106,7 +109,7 @@ function install_jemalloc() {
     tar xjvf jemalloc-3.0.0.tar.bz2
     cd jemalloc-3.0.0
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    make && make install
+    $BE_NICE make -j $CPUS && $BE_NICE make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -121,7 +124,7 @@ function install_libunwind() {
     cd libunwind-1.1
     autoreconf -i -f
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    make && make install
+    $BE_NICE make -j $CPUS && $BE_NICE make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -135,7 +138,7 @@ function install_libiconv() {
     tar xvzf libiconv-1.14.tar.gz
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    make && make install
+    $BE_NICE make -j $CPUS && $BE_NICE make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -150,21 +153,21 @@ function build() {
     git submodule update
     export HPHP_HOME=`pwd`
     export HPHP_LIB=`pwd`/bin
-    cmake .
-    make
+    $BE_NICE cmake .
+    $BE_NICE make -j $CPUS
 
     echo -e "\n > Done. \n"
 }
 
 function install() {
     install_dependencies
+      install_libevent
+      install_libcurl
+      install_googleglog
+      install_jemalloc
+      #install_libunwind
+      install_libiconv
     get_hiphop_source
-        install_libevent
-        install_libcurl
-        install_googleglog
-        install_jemalloc
-        install_libunwind
-        install_libiconv
     build
 }
 
@@ -174,7 +177,7 @@ ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hphp/hphp /usr/bin/hphp
 ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hhvm/hhvm /usr/bin/hhvm
 
 ## Success
-echo "HipHop-PHP is now installed!"
+echo -e "\n HipHop-PHP is now installed! \n"
 
 ## Fetch Version
 hphp -v
