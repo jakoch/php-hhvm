@@ -13,12 +13,12 @@ BE_NICE = $(ionice -c3 nice -n 19)
 function install_dependencies() {
     echo -e "\n Update & Install package dependencies. \n"
 
-    # this is need to fetch libboost 1.5
+    # for fetching libboost 1.50
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
 
-    sudo apt-get update -y
+    sudo apt-get --qq update -y
    
-    sudo apt-get install git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
+    sudo apt-get --qq install git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
       libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
       libcap-dev libgd2-xpm-dev zlib1g-dev libtbb-dev libonig-dev libpcre3-dev \
       autoconf libtool libcurl4-openssl-dev wget memcached \
@@ -68,7 +68,8 @@ function install_libevent() {
     cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1
     ./autogen.sh
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS && $BE_NICE make install
+    $BE_NICE make -j $CPUS
+    make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -82,7 +83,8 @@ function install_libcurl() {
     cd curl
     ./buildconf
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS && $BE_NICE make install
+    $BE_NICE make -j $CPUS
+    make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -95,7 +97,8 @@ function install_googleglog() {
     svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog
     cd google-glog
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS && $BE_NICE make install
+    $BE_NICE make -j $CPUS
+    make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -109,7 +112,8 @@ function install_jemalloc() {
     tar xjvf jemalloc-3.0.0.tar.bz2
     cd jemalloc-3.0.0
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS && $BE_NICE make install
+    $BE_NICE make -j $CPUS
+    make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -124,7 +128,8 @@ function install_libunwind() {
     cd libunwind-1.1
     autoreconf -i -f
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS && $BE_NICE make install
+    $BE_NICE make -j $CPUS
+    make install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -138,7 +143,8 @@ function install_libiconv() {
     tar xvzf libiconv-1.14.tar.gz
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS && $BE_NICE make install
+    $BE_NICE make -j $CPUS
+    make install
     cd ..
 
     echo -e "\n > Done. \n"
