@@ -67,7 +67,7 @@ function install_libcurl() {
 
     git clone --depth 1 git://github.com/bagder/curl.git
     cd curl
-    ./buildconf
+    ./buildconf > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
     ionice -c3 nice -n 19 make -s -j $CPUS
     ionice -c3 nice -n 19 make -s -j $CPUS install
@@ -137,12 +137,13 @@ function build() {
 
 function install() {
     install_dependencies
+    # the hiphop source must be fetched before the libraries, because of patches
+    get_hiphop_source
       install_libevent
       install_libcurl
       install_googleglog
       install_jemalloc
       install_libiconv
-    get_hiphop_source
     build
 }
 
