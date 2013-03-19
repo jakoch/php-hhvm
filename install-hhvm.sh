@@ -11,14 +11,13 @@ function install_dependencies() {
     echo -e "\n Update & Install package dependencies. \n"
 
     sudo apt-get update -y
-    sudo apt-get install -y git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
-      libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
-      libcap-dev libgd2-xpm-dev zlib1g-dev libtbb-dev libonig-dev libpcre3-dev \
-      autoconf libtool libcurl4-openssl-dev libboost-system-dev \
-      libboost-program-options-dev libboost-filesystem-dev wget memcached \
-      libreadline-dev libncurses-dev libmemcached-dev libbz2-dev \
-      libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
-      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev subversion
+    sudo apt-get install -y git-core subversion cmake g++ openssl wget memcached \
+      build-essential binutils-dev autoconf libtool php5-mcrypt php5-imagick \
+      libboost-all-dev libboost-system-dev libboost-program-options-dev libboost-filesystem-dev \   
+      libmysqlclient-dev libxml2-dev libmcrypt-dev libicu-dev libcap-dev libgd2-xpm-dev \
+      zlib1g-dev libtbb-dev libonig-dev libpcre3-dev libcurl4-openssl-dev libreadline-dev \
+      libncurses-dev libmemcached-dev libbz2-dev libc-client2007e-dev libgoogle-perftools-dev \
+      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev 
 
       echo -e "\n > Done. \n"
 }
