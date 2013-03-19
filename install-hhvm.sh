@@ -48,7 +48,7 @@ function get_hiphop_source() {
 function install_libevent() {
     echo -e "Installing libevent.\n"
 
-    git clone --depth 1 git://github.com/libevent/libevent.git
+    git clone git://github.com/libevent/libevent.git
     cd libevent
     git checkout release-1.4.14b-stable
     cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1
