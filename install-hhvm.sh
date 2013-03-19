@@ -7,7 +7,6 @@
 #
 
 export CPUS=´cat /proc/cpuinfo | grep processor | wc -l´
-export BE_NICE="ionice -c3 nice -n 19"
 
 # Install all package dependencies
 function install_dependencies() {
@@ -45,19 +44,6 @@ function get_hiphop_source() {
     echo -e "\n > Done. \n"
 }
 
-# Boost C++ Libraries
-function install_libboost() {
-    echo -e "\n Installing Boost C++ Libraries.\n"
-
-    wget -c 'http://sourceforge.net/projects/boost/files/boost/1.53.0/boost_1_53_0.tar.bz2/download'
-    tar xf download
-    cd boost_1_53_0
-    ./bootstrap.sh
-    ./b2 install
-
-    echo -e "\n > Done. \n"
-}
-
 # libevent
 function install_libevent() {
     echo -e "Installing libevent.\n"
@@ -66,10 +52,10 @@ function install_libevent() {
     cd libevent
     git checkout release-1.4.14b-stable
     cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1
-    ./autogen.sh
-    ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS
-    make install
+    ./autogen.sh > /dev/null
+    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
+    ionice -c3 nice -n 19 make -s -j $CPUS
+    ionice -c3 nice -n 19 make -s -j $CPUS install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -82,9 +68,9 @@ function install_libcurl() {
     git clone --depth 1 git://github.com/bagder/curl.git
     cd curl
     ./buildconf
-    ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS
-    make install
+    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
+    ionice -c3 nice -n 19 make -s -j $CPUS
+    ionice -c3 nice -n 19 make -s -j $CPUS install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -96,9 +82,9 @@ function install_googleglog() {
 
     svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog
     cd google-glog
-    ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS
-    make install
+    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
+    ionice -c3 nice -n 19 make -s -j $CPUS
+    ionice -c3 nice -n 19 make -s -j $CPUS install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -111,25 +97,9 @@ function install_jemalloc() {
     wget http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
     tar xjvf jemalloc-3.0.0.tar.bz2
     cd jemalloc-3.0.0
-    ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS
-    make install
-    cd ..
-
-    echo -e "\n > Done. \n"
-}
-
-# libunwind
-function install_libunwind() {
-    echo -e "\n Installing libunwind. \n"
-
-    wget http://download.savannah.gnu.org/releases/libunwind/libunwind-1.1.tar.gz
-    tar xvzf libunwind-1.1.tar.gz
-    cd libunwind-1.1
-    autoreconf -i -f
-    ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS
-    make install
+    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
+    ionice -c3 nice -n 19 make -s -j $CPUS
+    ionice -c3 nice -n 19 make -s -j $CPUS install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -143,8 +113,8 @@ function install_libiconv() {
     tar xvzf libiconv-1.14.tar.gz
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH
-    $BE_NICE make -j $CPUS
-    make install
+    ionice -c3 nice -n 19 make -s -j $CPUS
+    ionice -c3 nice -n 19 make -s -j $CPUS install
     cd ..
 
     echo -e "\n > Done. \n"
@@ -159,8 +129,8 @@ function build() {
     git submodule update
     export HPHP_HOME=`pwd`
     export HPHP_LIB=`pwd`/bin
-    $BE_NICE cmake .
-    $BE_NICE make -j $CPUS
+    ionice -c3 nice -n 19 cmake .
+    ionice -c3 nice -n 19 make -j $CPUS
 
     echo -e "\n > Done. \n"
 }
@@ -171,7 +141,6 @@ function install() {
       install_libcurl
       install_googleglog
       install_jemalloc
-      #install_libunwind
       install_libiconv
     get_hiphop_source
     build
