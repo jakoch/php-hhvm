@@ -6,8 +6,8 @@
 # https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.04
 #
 
-CPUS = $(cat /proc/cpuinfo | grep processor | wc -l)
-BE_NICE = $(ionice -c3 nice -n 19)
+cpus=$(cat /proc/cpuinfo | grep processor | wc -l)
+be_nice="ionice -c3 nice -n 19"
 
 # Install all package dependencies
 function install_dependencies() {
