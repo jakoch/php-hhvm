@@ -10,7 +10,11 @@ echo -e "\e[1;32m\tBuilding and installing HHVM \e[0m"
 echo -e "\t----------------------------"
 echo
 
-export CPUS=´cat /proc/cpuinfo | grep processor | wc -l´
+# how many virtual processors are there?
+export NUMCPUS=`grep ^processor /proc/cpuinfo | wc -l` 
+
+# parallel make
+alias pmake='time ionice -c3 nice -n 19 make -j$NUMCPUS --load-average=$NUMCPUS'
 
 # Install all package dependencies
 function install_dependencies() {
@@ -47,8 +51,8 @@ function install_libevent() {
     cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1 > /dev/null
     ./autogen.sh > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS install > /dev/null
+    pmake > /dev/null
+    pmake install > /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -65,8 +69,8 @@ function install_libcurl() {
     cd curl
     ./buildconf > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS install > /dev/null
+    pmake > /dev/null
+    pmake install > /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -82,8 +86,8 @@ function install_googleglog() {
     svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog  > /dev/null
     cd google-glog
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS  > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
+    pmake > /dev/null
+    pmake install  > /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -100,8 +104,8 @@ function install_jemalloc() {
     tar xjvf jemalloc-3.0.0.tar.bz2 > /dev/null
     cd jemalloc-3.0.0
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS  > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
+    pmake > /dev/null
+    pmake install > /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -118,8 +122,8 @@ function install_libiconv() {
     tar xvzf libiconv-1.14.tar.gz > /dev/null
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS  > /dev/null
-    ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
+    pmake > /dev/null
+    pmake install  > /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -156,7 +160,7 @@ function build() {
     export HPHP_HOME=`pwd`
     export HPHP_LIB=`pwd`/bin
     ionice -c3 nice -n 19 cmake .
-    ionice -c3 nice -n 19 make -j $CPUS
+    pmake -j $CPUS
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
