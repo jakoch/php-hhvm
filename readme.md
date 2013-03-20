@@ -7,6 +7,7 @@ Travis is used as the Continuous Integration Platform, because they provide dece
 
 #### Quick Links
 
+- [Dependencies (HPHPFindLibs.cmake)](https://github.com/facebook/hiphop-php/blob/master/CMake/HPHPFindLibs.cmake)
 - [HHVM Issues](https://github.com/facebook/hiphop-php/issues)
 - [Building and installing HHVM on Ubuntu 12.04](https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.04)
 - [Building and installing HHVM on Ubuntu 12.10 (AWS)](https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.10-%28tested-on-AWS%29)
