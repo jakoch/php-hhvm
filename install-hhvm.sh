@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+shopt -s expand_aliases
 
 #
 # Building and installing HHVM
@@ -160,7 +161,7 @@ function build() {
     export HPHP_HOME=`pwd`
     export HPHP_LIB=`pwd`/bin
     ionice -c3 nice -n 19 cmake .
-    pmake -j $CPUS
+    pmake
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
