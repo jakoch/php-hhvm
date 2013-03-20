@@ -161,7 +161,8 @@ function build() {
     export HPHP_HOME=`pwd`
     export HPHP_LIB=`pwd`/bin
     ionice -c3 nice -n 19 cmake .
-    pmake
+    #pmake
+    make
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
@@ -193,7 +194,7 @@ createSymlinks
 
 ## Success
 echo
-echo -e "\e[1;32m *** HipHop-PHP is now installed! *** \e[0m"
+echo -e "\e[1;32m *** HHVM is now installed! *** \e[0m"
 echo
 
 ## Fetch Version
