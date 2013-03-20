@@ -166,6 +166,15 @@ function build() {
     echo
 }
 
+function createSymlinks() {
+    echo
+    echo -e "\e[1;33mCreating Symlinks...\e[0m"
+    echo
+    
+    ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hphp/hphp /usr/bin/hphp
+    ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hhvm/hhvm /usr/bin/hhvm
+}
+
 function install() {
     install_dependencies
     # the hiphop source must be fetched before the libraries, because of patches
@@ -175,17 +184,16 @@ function install() {
       install_googleglog
       install_jemalloc
       install_libiconv
-    build
+    build    
 }
 
 install
-
-echo -e "\e[1;33m\n\tCreating Symlinks...\e[0m\n"
-ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hphp/hphp /usr/bin/hphp
-ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hhvm/hhvm /usr/bin/hhvm
+createSymlinks
 
 ## Success
-echo -e "\e[1;32m\n\t *** HipHop-PHP is now installed! *** \e[0m\n"
+echo
+echo -e "\e[1;32m *** HipHop-PHP is now installed! *** \e[0m"
+echo
 
 ## Fetch Version
 hphp -v
