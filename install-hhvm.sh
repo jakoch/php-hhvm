@@ -95,7 +95,7 @@ function install_jemalloc() {
     echo -e "\n Installing jemalloc. \n"
 
     wget http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
-    tar xjvf jemalloc-3.0.0.tar.bz2
+    tar xjvf jemalloc-3.0.0.tar.bz2 > /dev/null
     cd jemalloc-3.0.0
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
     ionice -c3 nice -n 19 make -s -j $CPUS
@@ -110,9 +110,9 @@ function install_libiconv() {
     echo -e "\n Installing libiconv. \n"
 
     wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
-    tar xvzf libiconv-1.14.tar.gz
+    tar xvzf libiconv-1.14.tar.gz > /dev/null
     cd libiconv-1.14
-    ./configure --prefix=$CMAKE_PREFIX_PATH
+    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
     ionice -c3 nice -n 19 make -s -j $CPUS
     ionice -c3 nice -n 19 make -s -j $CPUS install
     cd ..
