@@ -15,7 +15,7 @@ export CPUS=´cat /proc/cpuinfo | grep processor | wc -l´
 # Install all package dependencies
 function install_dependencies() {
     echo
-    echo -e "\e[1;33m\tInstalling package dependencies...\e[0m"
+    echo -e "\e[1;33mInstalling package dependencies...\e[0m"
     echo
 
     # for fetching libboost 1.50
@@ -31,7 +31,8 @@ function install_dependencies() {
       libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
       libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev subversion &> /dev/null
 
-    echo -e "\e[1;32m\t> Done.\e[0m"
+    echo -e "\e[1;32m> Done.\e[0m"
+    echo
 }
 
 # libevent
@@ -51,12 +52,13 @@ function install_libevent() {
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
+    echo
 }
 
 # libCurl
 function install_libcurl() {
     echo
-    echo -e "\e[1;33m\tInstalling libcurl...\e[0m"
+    echo -e "\e[1;33mInstalling libcurl...\e[0m"
     echo
 
     git clone --quiet --depth 1 git://github.com/bagder/curl.git
@@ -67,13 +69,14 @@ function install_libcurl() {
     ionice -c3 nice -n 19 make -j $CPUS install > /dev/null
     cd ..
 
-    echo -e "\e[1;32m\t> Done.\e[0m"
+    echo -e "\e[1;32m> Done.\e[0m"
+    echo
 }
 
 # google glog
 function install_googleglog() {
     echo
-    echo -e "\e[1;33m\tInstalling Google Glog...\e[0m"
+    echo -e "\e[1;33mInstalling Google Glog...\e[0m"
     echo
 
     svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog  > /dev/null
@@ -83,13 +86,14 @@ function install_googleglog() {
     ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
     cd ..
 
-    echo -e "\e[1;32m\t> Done.\e[0m"
+    echo -e "\e[1;32m> Done.\e[0m"
+    echo
 }
 
 # jemalloc
 function install_jemalloc() {
     echo
-    echo -e "\e[1;33m\tInstalling jemalloc...\e[0m"
+    echo -e "\e[1;33mInstalling jemalloc...\e[0m"
     echo
 
     wget http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
@@ -100,13 +104,14 @@ function install_jemalloc() {
     ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
     cd ..
 
-    echo -e "\e[1;32m\t> Done.\e[0m"
+    echo -e "\e[1;32m> Done.\e[0m"
+    echo
 }
 
 # libiconv
 function install_libiconv() {
     echo
-    echo -e "\e[1;33m\tInstalling libiconv...\e[0m"
+    echo -e "\e[1;33mInstalling libiconv...\e[0m"
     echo
 
     wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
@@ -117,7 +122,8 @@ function install_libiconv() {
     ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
     cd ..
 
-    echo -e "\e[1;32m\t> Done.\e[0m"
+    echo -e "\e[1;32m> Done.\e[0m"
+    echo
 }
 
 function get_hiphop_source() {
@@ -135,12 +141,13 @@ function get_hiphop_source() {
     export USE_HHVM=1
     cd ..
 
-    echo -e "\e[1;32m\t> Done.\e[0m"
+    echo -e "\e[1;32m> Done.\e[0m"
+    echo
 }
 
 function build() {
     echo
-    echo -e "\e[1;33m\tBuilding HHVM...\e[0m"
+    echo -e "\e[1;33mBuilding HHVM...\e[0m"
     echo
 
     cd hiphop-php
@@ -151,7 +158,8 @@ function build() {
     ionice -c3 nice -n 19 cmake .
     ionice -c3 nice -n 19 make -j $CPUS
 
-    echo -e "\e[1;32m\t> Done.\e[0m"
+    echo -e "\e[1;32m> Done.\e[0m"
+    echo
 }
 
 function install() {
