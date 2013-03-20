@@ -5,12 +5,16 @@
 #
 # https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.04
 #
+echo
+echo -e "\e[1;32m\tBuilding and installing HHVM \e[0m"
+echo -e "\t----------------------------"
+echo
 
 export CPUS=´cat /proc/cpuinfo | grep processor | wc -l´
 
 # Install all package dependencies
 function install_dependencies() {
-    echo -e "\n Update & Install package dependencies. \n"
+    echo -en "\e[1;32m\tUpdating & Installing package dependencies.\e[0m"
 
     # for fetching libboost 1.50
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
@@ -25,15 +29,15 @@ function install_dependencies() {
       libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
       libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev subversion > /dev/null
 
-      echo -e "\n > Done. \n"
+    echo -en "\e[1;32m\t> Done.\e[0m"
 }
 
 function get_hiphop_source() {
-    echo -e "\n Fetching hiphop-php.\n"
+    echo -en "\e[1;32m\tFetching hiphop-php.\e[0m"
 
     mkdir dev
     cd dev
-    git clone --depth 1 git://github.com/facebook/hiphop-php.git
+    git clone --depth 1 git://github.com/facebook/hiphop-php.git > /dev/null
     cd hiphop-php
     export CMAKE_PREFIX_PATH=`/bin/pwd`/..
     export HPHP_HOME=`/bin/pwd`
@@ -41,88 +45,88 @@ function get_hiphop_source() {
     export USE_HHVM=1
     cd ..
 
-    echo -e "\n > Done. \n"
+    echo -en "\e[1;32m\t> Done.\e[0m"
 }
 
 # libevent
 function install_libevent() {
-    echo -e "Installing libevent.\n"
+    echo -en "\e[1;33m\tInstalling libevent.\e[0m"
 
-    git clone git://github.com/libevent/libevent.git
+    git clone git://github.com/libevent/libevent.git > /dev/null
     cd libevent
-    git checkout release-1.4.14b-stable
-    cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1
+    git checkout release-1.4.14b-stable  > /dev/null
+    cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1 > /dev/null
     ./autogen.sh > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -s -j $CPUS
-    ionice -c3 nice -n 19 make -s -j $CPUS install
+    ionice -c3 nice -n 19 make -j $CPUS > /dev/null
+    ionice -c3 nice -n 19 make -j $CPUS install > /dev/null
     cd ..
 
-    echo -e "\n > Done. \n"
+    echo -en "\e[1;32m\t> Done.\e[0m"
 }
 
 # libCurl
 function install_libcurl() {
-    echo -e "\n Installing curl. \n"
+    echo -en "\e[1;33m\tInstalling curl.\e[0m"
 
-    git clone --depth 1 git://github.com/bagder/curl.git
+    git clone --depth 1 git://github.com/bagder/curl.git > /dev/null
     cd curl
     ./buildconf > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -s -j $CPUS
-    ionice -c3 nice -n 19 make -s -j $CPUS install
+    ionice -c3 nice -n 19 make -j $CPUS > /dev/null
+    ionice -c3 nice -n 19 make -j $CPUS install > /dev/null
     cd ..
 
-    echo -e "\n > Done. \n"
+    echo -en "\e[1;32m\t> Done.\e[0m"
 }
 
 # google glog
 function install_googleglog() {
-    echo -e "\n Installing Google Glog. \n"
+    echo -en "\e[1;33m\tInstalling Google Glog.\e[0m"
 
-    svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog
+    svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog  > /dev/null
     cd google-glog
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -s -j $CPUS
-    ionice -c3 nice -n 19 make -s -j $CPUS install
+    ionice -c3 nice -n 19 make -j $CPUS  > /dev/null
+    ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
     cd ..
 
-    echo -e "\n > Done. \n"
+    echo -en "\e[1;32m\t> Done.\e[0m"
 }
 
 # jemalloc
 function install_jemalloc() {
-    echo -e "\n Installing jemalloc. \n"
+    echo -en "\e[1;33m\tInstalling jemalloc.\e[0m"
 
     wget http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
     tar xjvf jemalloc-3.0.0.tar.bz2 > /dev/null
     cd jemalloc-3.0.0
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -s -j $CPUS
-    ionice -c3 nice -n 19 make -s -j $CPUS install
+    ionice -c3 nice -n 19 make -j $CPUS  > /dev/null
+    ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
     cd ..
 
-    echo -e "\n > Done. \n"
+    echo -en "\e[1;32m\t> Done.\e[0m"
 }
 
 # libiconv
 function install_libiconv() {
-    echo -e "\n Installing libiconv. \n"
+    echo -en "\e[1;33m\tInstalling libiconv.\e[0m"
 
     wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
     tar xvzf libiconv-1.14.tar.gz > /dev/null
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    ionice -c3 nice -n 19 make -s -j $CPUS
-    ionice -c3 nice -n 19 make -s -j $CPUS install
+    ionice -c3 nice -n 19 make -j $CPUS  > /dev/null
+    ionice -c3 nice -n 19 make -j $CPUS install  > /dev/null
     cd ..
 
-    echo -e "\n > Done. \n"
+    echo -en "\e[1;32m\t> Done.\e[0m"
 }
 
 
 function build() {
-    echo -e "\n Building HHVM. \n"
+    echo -en "\e[1;33m\tBuilding HHVM.\e[0m"
 
     cd hiphop-php
     git submodule init
@@ -132,7 +136,7 @@ function build() {
     ionice -c3 nice -n 19 cmake .
     ionice -c3 nice -n 19 make -j $CPUS
 
-    echo -e "\n > Done. \n"
+    echo -en "\e[1;32m\t> Done.\e[0m"
 }
 
 function install() {
