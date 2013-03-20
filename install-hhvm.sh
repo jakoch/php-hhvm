@@ -96,7 +96,7 @@ function install_jemalloc() {
     echo -e "\e[1;33mInstalling jemalloc...\e[0m"
     echo
 
-    wget http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
+    wget --quiet http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
     tar xjvf jemalloc-3.0.0.tar.bz2 > /dev/null
     cd jemalloc-3.0.0
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
@@ -114,7 +114,7 @@ function install_libiconv() {
     echo -e "\e[1;33mInstalling libiconv...\e[0m"
     echo
 
-    wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+    wget --quiet http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
     tar xvzf libiconv-1.14.tar.gz > /dev/null
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
