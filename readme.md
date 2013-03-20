@@ -8,6 +8,8 @@ Travis is used as the Continuous Integration Platform, because they provide dece
 #### Quick Links
 
 https://github.com/facebook/hiphop-php/issues
+https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.04
+https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.10-%28tested-on-AWS%29
 
 #### Building on CentOS
 
