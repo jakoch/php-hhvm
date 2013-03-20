@@ -14,7 +14,7 @@ export CPUS=´cat /proc/cpuinfo | grep processor | wc -l´
 
 # Install all package dependencies
 function install_dependencies() {
-    echo -e "\e[1;33m\n\tUpdating & Installing package dependencies.\e[0m\n"
+    echo -e "\e[1;33m\n\tInstalling package dependencies...\e[0m\n"
 
     # for fetching libboost 1.50
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
@@ -33,7 +33,7 @@ function install_dependencies() {
 }
 
 function get_hiphop_source() {
-    echo -e "\e[1;33m\n\tFetching hiphop-php.\e[0m\n"
+    echo -e "\e[1;33m\n\tFetching hiphop-php...\e[0m\n"
 
     mkdir dev
     cd dev
@@ -50,7 +50,7 @@ function get_hiphop_source() {
 
 # libevent
 function install_libevent() {
-    echo -e "\e[1;33m\n\tInstalling libevent.\e[0m\n"
+    echo -e "\e[1;33m\n\tInstalling libevent...\e[0m\n"
 
     git clone git://github.com/libevent/libevent.git > /dev/null
     cd libevent
@@ -67,7 +67,7 @@ function install_libevent() {
 
 # libCurl
 function install_libcurl() {
-    echo -e "\e[1;33m\n\tInstalling curl.\e[0m\n"
+    echo -e "\e[1;33m\n\tInstalling libcurl...\e[0m\n"
 
     git clone --depth 1 git://github.com/bagder/curl.git > /dev/null
     cd curl
@@ -82,7 +82,7 @@ function install_libcurl() {
 
 # google glog
 function install_googleglog() {
-    echo -e "\e[1;33m\n\tInstalling Google Glog.\e[0m\n"
+    echo -e "\e[1;33m\n\tInstalling Google Glog...\e[0m\n"
 
     svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog  > /dev/null
     cd google-glog
@@ -96,7 +96,7 @@ function install_googleglog() {
 
 # jemalloc
 function install_jemalloc() {
-    echo -e "\e[1;33m\n\tInstalling jemalloc.\e[0m\n"
+    echo -e "\e[1;33m\n\tInstalling jemalloc...\e[0m\n"
 
     wget http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
     tar xjvf jemalloc-3.0.0.tar.bz2 > /dev/null
@@ -111,7 +111,7 @@ function install_jemalloc() {
 
 # libiconv
 function install_libiconv() {
-    echo -e "\e[1;33m\n\tInstalling libiconv.\e[0m\n"
+    echo -e "\e[1;33m\n\tInstalling libiconv...\e[0m\n"
 
     wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
     tar xvzf libiconv-1.14.tar.gz > /dev/null
@@ -126,7 +126,7 @@ function install_libiconv() {
 
 
 function build() {
-    echo -e "\e[1;33m\n\tBuilding HHVM.\e[0m\n"
+    echo -e "\e[1;33m\n\tBuilding HHVM...\e[0m\n"
 
     cd hiphop-php
     git submodule init
@@ -153,11 +153,12 @@ function install() {
 
 install
 
+echo -e "\e[1;33m\n\tCreating Symlinks...\e[0m\n"
 ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hphp/hphp /usr/bin/hphp
 ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hhvm/hhvm /usr/bin/hhvm
 
 ## Success
-echo -e "\n HipHop-PHP is now installed! \n"
+echo -e "\e[1;32m\n\t *** HipHop-PHP is now installed! *** \e[0m\n"
 
 ## Fetch Version
 hphp -v
