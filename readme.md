@@ -21,8 +21,12 @@ If you intend building HHVM on CentOS, you might take a look at https://github.c
 ### Notes on Build Failures
 
 ### make -jN
-Do not use make -j to build HHVM, because parallel jobs make the build fail.
-On the other hand, building HHVM might exceed the allowed runtime for a build job on Travis-CI, which is limited to 50 minutes.
+- I suggest to not use make -jN to build HHVM, because parallel jobs "tend to" make the build fail.
+- On the other hand, building HHVM might exceed the allowed runtime for a build job on Travis-CI, which is limited to 50 minutes.
+- To keep it under 50 minutes, we are building with "time ionice -c3 nice -n 19 make -j2". 
+A build finishes in approximately 37 minutes.
+The result of "time" is  (time: real 36m14.618s - user	67m9.428s - sys	4m22.474s).
+The value "real" represents the actual elapsed time, while "user" and "sys" values represent CPU execution time.
 
 ### -- Performing Test LIBICONV_CONST - Failed
  
