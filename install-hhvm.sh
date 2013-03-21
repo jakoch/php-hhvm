@@ -203,4 +203,5 @@ hhvm -v
 
 ## Getting started with Hello-World
 echo -e "<?php\n echo \"Hello Hiphop-PHP!\";\n?>" > hello.php
-hhvm -m server -p 8000 ./
+hhvm -m server -p 8123 ./
+lynx -source http://127.0.0.1:8123/index.php
