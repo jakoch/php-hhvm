@@ -162,7 +162,7 @@ function build() {
     export HPHP_LIB=`pwd`/bin
     ionice -c3 nice -n 19 cmake .
     #pmake
-    make
+    time ionice -c3 nice -n 19 make -j2
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
@@ -173,8 +173,8 @@ function createSymlinks() {
     echo -e "\e[1;33mCreating Symlinks...\e[0m"
     echo
     
-    ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hphp/hphp /usr/bin/hphp
-    ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/src/hhvm/hhvm /usr/bin/hhvm
+    ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hphpi/hphpi /usr/bin/hphpi
+    ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm /usr/bin/hhvm
 }
 
 function install() {
