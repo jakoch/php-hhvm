@@ -200,3 +200,7 @@ echo
 ## Fetch Version
 hphp -v
 hhvm -v
+
+## Getting started with Hello-World
+echo -e "<?php\n echo \"Hello Hiphop-PHP!\";\n?>" > hello.php
+hhvm -m server -p 8000 ./
