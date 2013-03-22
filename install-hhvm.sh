@@ -168,15 +168,6 @@ function build() {
     echo
 }
 
-function createSymlinks() {
-    echo
-    echo -e "\e[1;33mCreating Symlinks...\e[0m"
-    echo
-    
-    ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hphpi/hphpi /usr/bin/hphpi
-    ln -fs ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm /usr/bin/hhvm
-}
-
 function install() {
     install_dependencies
     # the hiphop source must be fetched before the libraries, because of patches
@@ -190,7 +181,6 @@ function install() {
 }
 
 install
-createSymlinks
 
 ## Success
 echo
@@ -198,10 +188,9 @@ echo -e "\e[1;32m *** HHVM is now installed! *** \e[0m"
 echo
 
 ## Fetch Version
-hphp -v
-hhvm -v
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --help
 
 ## Getting started with Hello-World
 echo -e "<?php\n echo \"Hello Hiphop-PHP!\";\n?>" > hello.php
-hhvm -m server -p 8123 ./
-lynx -source http://127.0.0.1:8123/index.php
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm -m server -p 8123 ./
+lynx -source http://127.0.0.1:8123/hello.php
