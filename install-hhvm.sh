@@ -192,5 +192,8 @@ ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --help
 
 ## Getting started with Hello-World
 echo -e "<?php\n echo \"Hello Hiphop-PHP!\";\n?>" > hello.php
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm -m server -p 8123 ./
-lynx -source http://127.0.0.1:8123/hello.php
+
+#${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm -m server -p 8123 ./
+#lynx -source http://127.0.0.1:8123/hello.php
+
+hhvm -f hello.php
