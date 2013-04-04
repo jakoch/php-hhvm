@@ -162,7 +162,7 @@ function build() {
     export HPHP_LIB=`pwd`/bin
     ionice -c3 nice -n 19 cmake .
     #pmake
-    time ionice -c3 nice -n 19 make -j2
+    time ionice -c3 nice -n 19 make -j3
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
