@@ -187,18 +187,27 @@ echo
 echo -e "\e[1;32m *** HHVM is now installed! *** \e[0m"
 echo
 
-## Fetch Version
+echo
+echo -e "\e[1;32m *** Launching some basic HHVM commands as a demonstration! *** \e[0m"
+echo
+
+## Display Version
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --version
+
+## Display Help
 ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --help
 
 ## Getting started with Hello-World
 echo -e "<?php\n echo \"Hello Hiphop-PHP!\";\n?>" > hello.php
 
+# Example of executing specified file
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php
+
 # Example of the Server Mode
 #${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm -m server -p 8123 ./
 #lynx -source http://127.0.0.1:8123/hello.php
 
-# Example of executing specified file
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php
-
 # Example of parsing the specified file and dumping the AST
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --parse hello.php
+#${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --parse hello.php
+
+exit 0
