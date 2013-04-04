@@ -2,10 +2,11 @@
 shopt -s expand_aliases
 
 #
-# Building and installing HHVM
+# A build script for building HHVM on Debian based linux distributions.
 #
-# https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.04
+# https://github.com/jakoch/php-hhvm
 #
+
 echo
 echo -e "\e[1;32m\tBuilding and installing HHVM \e[0m"
 echo -e "\t----------------------------"
