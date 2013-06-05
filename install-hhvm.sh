@@ -211,4 +211,7 @@ ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php
 # Example of parsing the specified file and dumping the AST
 #${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --parse hello.php
 
+# Run HHVM TestSuite
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm hphp/test/run --arg --threads 4 quick zend slow
+
 exit 0
