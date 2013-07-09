@@ -9,3 +9,7 @@ script:
 notifications:
   irc: "irc.freenode.org#koch"
   email: false
+
+# reduce commit history of git checkout
+git:
+  depth: 25
