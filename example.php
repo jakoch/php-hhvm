@@ -19,4 +19,15 @@ echo "$global_variable_a ${$global_variable_a}";
 echo "$global_variable_a $Hello";
 echo "$global_variable_a $hello"; // variable names are not case sensitve
 
+/**
+ * Undeclared Property
+ */
+class test {
+    public function run() {
+        echo $this->undeclaredProperty;
+    }
+}
+$test = new test;
+$test->run();
+
 ?>
