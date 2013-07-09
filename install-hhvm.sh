@@ -27,7 +27,7 @@ function install_dependencies() {
     # for fetching libboost 1.50
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
 
-    sudo apt-get update -y &> /dev/null
+    sudo apt-get update -y #&> /dev/null
 
     sudo apt-get install git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
       libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
@@ -35,7 +35,7 @@ function install_dependencies() {
       autoconf libtool libcurl4-openssl-dev wget memcached \
       libreadline-dev libncurses-dev libmemcached-dev libbz2-dev \
       libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
-      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion &> /dev/null
+      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion #&> /dev/null
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
@@ -49,12 +49,12 @@ function install_libevent() {
 
     git clone --quiet git://github.com/libevent/libevent.git
     cd libevent
-    git checkout release-1.4.14b-stable  > /dev/null
-    cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1 > /dev/null
-    ./autogen.sh > /dev/null
-    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install > /dev/null
+    git checkout release-1.4.14b-stable  #> /dev/null
+    cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1 #> /dev/null
+    ./autogen.sh #> /dev/null
+    ./configure --prefix=$CMAKE_PREFIX_PATH #> /dev/null
+    pmake #> /dev/null
+    pmake install #> /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -69,10 +69,10 @@ function install_libcurl() {
 
     git clone --quiet --depth 1 git://github.com/bagder/curl.git
     cd curl
-    ./buildconf > /dev/null
-    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install > /dev/null
+    ./buildconf #> /dev/null
+    ./configure --prefix=$CMAKE_PREFIX_PATH #> /dev/null
+    pmake #> /dev/null
+    pmake install #> /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -85,11 +85,11 @@ function install_googleglog() {
     echo -e "\e[1;33mInstalling Google Glog...\e[0m"
     echo
 
-    svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog  > /dev/null
+    svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog  #> /dev/null
     cd google-glog
-    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install  > /dev/null
+    ./configure --prefix=$CMAKE_PREFIX_PATH #> /dev/null
+    pmake #> /dev/null
+    pmake install  #> /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -103,11 +103,11 @@ function install_jemalloc() {
     echo
 
     wget --quiet http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
-    tar xjvf jemalloc-3.0.0.tar.bz2 > /dev/null
+    tar xjvf jemalloc-3.0.0.tar.bz2 #> /dev/null
     cd jemalloc-3.0.0
-    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install > /dev/null
+    ./configure --prefix=$CMAKE_PREFIX_PATH #> /dev/null
+    pmake #> /dev/null
+    pmake install #> /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -121,11 +121,11 @@ function install_libiconv() {
     echo
 
     wget --quiet http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
-    tar xvzf libiconv-1.14.tar.gz > /dev/null
+    tar xvzf libiconv-1.14.tar.gz #> /dev/null
     cd libiconv-1.14
-    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install  > /dev/null
+    ./configure --prefix=$CMAKE_PREFIX_PATH #> /dev/null
+    pmake #> /dev/null
+    pmake install  #> /dev/null
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -157,8 +157,8 @@ function build() {
     echo
 
     cd hiphop-php
-    git submodule init > /dev/null
-    git submodule update > /dev/null
+    git submodule init #> /dev/null
+    git submodule update #> /dev/null
     export HPHP_HOME=`pwd`
     export HPHP_LIB=`pwd`/bin
     ionice -c3 nice -n 19 cmake .
