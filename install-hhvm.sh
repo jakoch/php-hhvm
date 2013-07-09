@@ -159,11 +159,12 @@ function build() {
     cd hiphop-php
     git submodule init #> /dev/null
     git submodule update #> /dev/null
+    sudo locale-gen de_DE && sudo locale-gen zh_CN.utf8 && sudo locale-gen fr_FR
     export HPHP_HOME=`pwd`
     export HPHP_LIB=`pwd`/bin
     ionice -c3 nice -n 19 cmake .
     #pmake
-    time ionice -c3 nice -n 19 make -j3
+    time ionice -c3 nice -n 19 make -j8
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
