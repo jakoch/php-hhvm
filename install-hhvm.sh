@@ -13,7 +13,7 @@ echo -e "\t----------------------------"
 echo
 
 # how many virtual processors are there?
-export NUMCPUS=`grep ^processor /proc/cpuinfo | wc -l` 
+export NUMCPUS=`grep ^processor /proc/cpuinfo | wc -l`
 
 # parallel make
 alias pmake='time ionice -c3 nice -n 19 make -j$NUMCPUS --load-average=$NUMCPUS'
@@ -28,7 +28,7 @@ function install_dependencies() {
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
 
     sudo apt-get update -y &> /dev/null
-   
+
     sudo apt-get install git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
       libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
       libcap-dev libgd2-xpm-dev zlib1g-dev libtbb-dev libonig-dev libpcre3-dev \
@@ -178,7 +178,7 @@ function install() {
       install_googleglog
       install_jemalloc
       install_libiconv
-    build    
+    build
 }
 
 install
@@ -199,7 +199,7 @@ ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --version
 ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --help
 
 ## Getting started with Hello-World
-echo -e "<?php\n echo \"Hello Hiphop-PHP!\";\n?>" > hello.php
+echo -e "<?php\n echo 'Hello Hiphop-PHP!' . PHP_EOL;\n?>" > hello.php
 
 # Example of executing specified file
 ${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php
