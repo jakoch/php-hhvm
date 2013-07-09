@@ -1,9 +1,11 @@
 language: c
-compiler: gcc
-script: 
+compiler:
+  - gcc
+  - clang
+script:
   - chmod -R 777 ./install-hhvm.sh
   - ./install-hhvm.sh
-  
+
 notifications:
   irc: "irc.freenode.org#koch"
   email: false
