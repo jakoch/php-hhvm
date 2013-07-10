@@ -27,7 +27,7 @@ function install_dependencies() {
     # for fetching libboost 1.50
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
 
-    sudo apt-get update -y > /dev/null
+    sudo apt-get update -y
 
     sudo apt-get install git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
       libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
@@ -35,7 +35,7 @@ function install_dependencies() {
       autoconf libtool libcurl4-openssl-dev wget memcached \
       libreadline-dev libncurses-dev libmemcached-dev libbz2-dev \
       libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
-      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion > /dev/null
+      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
