@@ -213,7 +213,7 @@ echo
 echo -e "\e[1;32m *** Static Analyzer Report ! *** \e[0m"
 echo
 
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --hphp -t analyze --input-list ./example.php --output-dir . --log 2 > report.log
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --hphp -t analyze --input-list example.php --output-dir . --log 2 > report.log
 cat report.log
 
 echo
