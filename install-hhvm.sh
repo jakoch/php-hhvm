@@ -235,6 +235,6 @@ echo -e "\e[1;32m *** Run HHVM TestSuite! *** \e[0m"
 echo
 
 # Run HHVM TestSuite
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm hphp/test/run --threads 4 quick slow zend
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm hphp/test/run all
 
 exit 0
