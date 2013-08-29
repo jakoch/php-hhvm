@@ -165,6 +165,7 @@ function build() {
     echo
 
     cd hiphop-php
+    sudo configure_ubuntu_12.04.sh
     git submodule init > /dev/null
     git submodule update > /dev/null
     sudo locale-gen de_DE && sudo locale-gen zh_CN.utf8 && sudo locale-gen fr_FR
@@ -179,14 +180,14 @@ function build() {
 }
 
 function install() {
-    install_dependencies
+    #install_dependencies
     # the hiphop source must be fetched before the libraries, because of patches
     get_hiphop_source
-      install_libevent
-      install_libcurl
-      install_googleglog
-      install_jemalloc
-      install_libiconv
+      #install_libevent
+      #install_libcurl
+      #install_googleglog
+      #install_jemalloc
+      #install_libiconv
     build
 }
 
