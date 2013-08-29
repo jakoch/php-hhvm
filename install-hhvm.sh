@@ -165,7 +165,7 @@ function build() {
     echo
 
     cd hiphop-php
-    sudo configure_ubuntu_12.04.sh
+    sudo ./configure_ubuntu_12.04.sh
     git submodule init > /dev/null
     git submodule update > /dev/null
     sudo locale-gen de_DE && sudo locale-gen zh_CN.utf8 && sudo locale-gen fr_FR
