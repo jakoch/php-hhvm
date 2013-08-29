@@ -48,7 +48,7 @@ function install_dependencies() {
 
     sudo apt-get update -y
 
-    apt-get -t experimental install libmemcached-dev
+    sudo apt-get -t experimental install libmemcached-dev
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
