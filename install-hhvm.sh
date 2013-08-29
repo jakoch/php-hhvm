@@ -42,6 +42,9 @@ function install_dependencies() {
     # libmemcached_portability.h:35:2: error: #error libmemcached 1.0.8 is unsupported, either upgrade or downgrade
 
     sudo add-apt-repository -y "deb http://ftp.debian.org/debian experimental main"
+    
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com AED4B06F473041FA
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 8B48AD6246925553
 
     sudo apt-get update -y
 
