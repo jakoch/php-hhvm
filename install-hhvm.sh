@@ -37,6 +37,16 @@ function install_dependencies() {
       libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
       libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion
 
+
+    # fetch libmemcached v1.0.17, because
+    # libmemcached_portability.h:35:2: error: #error libmemcached 1.0.8 is unsupported, either upgrade or downgrade
+
+    sudo add-apt-repository -y "deb http://ftp.debian.org/debian experimental main"
+
+    sudo apt-get update -y
+
+    apt-get -t experimental install libmemcached-dev
+
     echo -e "\e[1;32m> Done.\e[0m"
     echo
 }
