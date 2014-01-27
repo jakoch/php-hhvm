@@ -66,7 +66,7 @@ function install_libevent() {
     cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1 > /dev/null
     ./autogen.sh > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake && pmake install > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -83,7 +83,7 @@ function install_libcurl() {
     cd curl
     ./buildconf > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake && pmake install > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -99,7 +99,7 @@ function install_googleglog() {
     svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog  > /dev/null
     cd google-glog
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake && pmake install  > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -116,7 +116,7 @@ function install_jemalloc() {
     tar xjvf jemalloc-3.0.0.tar.bz2 > /dev/null
     cd jemalloc-3.0.0
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake && pmake install > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -133,7 +133,7 @@ function install_libiconv() {
     tar xvzf libiconv-1.14.tar.gz > /dev/null
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake && pmake install > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -167,29 +167,25 @@ function build() {
     echo
 
     cd hiphop-php
-    sudo ./configure_ubuntu_12.04.sh
 
     sudo locale-gen de_DE && sudo locale-gen zh_CN.utf8 && sudo locale-gen fr_FR
-    export HPHP_HOME=`pwd`
     export HPHP_LIB=`pwd`/bin
 
-    #ionice -c3 nice -n 19 cmake .
-    #pmake
-    #time ionice -c3 nice -n 19 make -j8
+    pmake
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
 }
 
 function install() {
-    #install_dependencies
+    install_dependencies
     # the hiphop source must be fetched before the libraries, because of patches
     get_hiphop_source
-      #install_libevent
-      #install_libcurl
-      #install_googleglog
-      #install_jemalloc
-      #install_libiconv
+      install_libevent
+      install_libcurl
+      install_googleglog
+      install_jemalloc
+      install_libiconv
     build
 }
 
