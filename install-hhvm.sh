@@ -217,7 +217,7 @@ echo
 echo -e "\e[1;32m *** Example of executing specified file *** \e[0m"
 echo
 
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm hello.php
 
 echo
 echo -e "\e[1;32m *** Example of linting specified file *** \e[0m"
@@ -237,14 +237,14 @@ echo -e "\e[1;32m *** Example of parsing the specified file and dumping the AST 
 echo
 
 # uhm? > The 'parse' command line option is not supported
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php --parse
+#${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php --parse
 
 echo
 echo -e "\e[1;32m *** Example of the Server Mode ! *** \e[0m"
 echo
 
-#${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm -m server -p 8123 ./
-#lynx -source http://127.0.0.1:8123/hello.php
+${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm -m server -p 8123 ./
+curl http://127.0.0.1:8123/hello.php
 
 echo
 echo -e "\e[1;32m *** Run HHVM TestSuite! *** \e[0m"
