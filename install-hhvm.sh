@@ -176,7 +176,7 @@ function build() {
     make
     
     # where am i, why is it so dark
-    ls & cd.. & ls
+    ls & cd .. & ls
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
@@ -206,10 +206,12 @@ echo -e "\e[1;32m *** Launching some basic HHVM commands as a demonstration! ***
 echo
 
 ## Display Version
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --version
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm --version
+./hphp/hhvm/hhvm --version
+hhvm --version
 
 ## Display Help
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --help
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm --help
 
 ## Getting started with Hello-World
 echo -e "<?php\n echo 'Hello Hiphop-PHP!' . PHP_EOL;\n?>" > hello.php
@@ -218,19 +220,19 @@ echo
 echo -e "\e[1;32m *** Example of executing specified file *** \e[0m"
 echo
 
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm hello.php
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm hello.php
 
 echo
 echo -e "\e[1;32m *** Example of linting specified file *** \e[0m"
 echo
 
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --lint hello.php
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm --lint hello.php
 
 echo
 echo -e "\e[1;32m *** Static Analyzer Report ! *** \e[0m"
 echo
 
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --hphp -t analyze --input-list example.php --output-dir . --log 2 > report.log
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm --hphp -t analyze --input-list example.php --output-dir . --log 2 > report.log
 cat report.log
 
 echo
@@ -244,7 +246,7 @@ echo
 echo -e "\e[1;32m *** Example of the Server Mode ! *** \e[0m"
 echo
 
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm -m server -p 8123 ./
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm -m server -p 8123 ./
 curl http://127.0.0.1:8123/hello.php
 
 echo
@@ -252,6 +254,6 @@ echo -e "\e[1;32m *** Run HHVM TestSuite! *** \e[0m"
 echo
 
 # Run HHVM TestSuite
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm hphp/test/run all
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm hphp/test/run all
 
 exit 0
