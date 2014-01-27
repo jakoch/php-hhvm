@@ -170,8 +170,13 @@ function build() {
 
     sudo locale-gen de_DE && sudo locale-gen zh_CN.utf8 && sudo locale-gen fr_FR
     export HPHP_LIB=`pwd`/bin
-
+    export CMAKE_PREFIX_PATH=\`pwd\`/.. 
+    
     cmake .
+    make
+    
+    # where am i, why is it so dark
+    ls & cd.. & ls
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
