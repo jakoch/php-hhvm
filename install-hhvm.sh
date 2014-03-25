@@ -28,20 +28,21 @@ function install_dependencies() {
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
 
 
-    sudo apt-get install git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
+    sudo apt-get install git-core cmake g++ cpp gcc make libboost1.50-all-dev libmysqlclient-dev \
       libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
       libcap-dev libgd2-xpm-dev zlib1g-dev libtbb-dev libonig-dev libpcre3-dev \
       autoconf libtool libcurl4-openssl-dev wget memcached \
       libreadline-dev libncurses-dev libmemcached-dev libbz2-dev \
       libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
-      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion
+      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion \
+      g++-4.7 gcc-4.7
 
 
     # fetch libmemcached v1.0.17, because
     # libmemcached_portability.h:35:2: error: #error libmemcached 1.0.8 is unsupported, either upgrade or downgrade
 
     sudo add-apt-repository -y "deb http://ftp.debian.org/debian experimental main"
-    
+
     sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com AED4B06F473041FA
     sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 8B48AD6246925553
 
@@ -139,21 +140,17 @@ function install_libiconv() {
     echo
 }
 
-function get_hiphop_source() {
+function get_hhvm_source() {
     echo
-    echo -e "\e[1;33mFetching hiphop-php...\e[0m"
+    echo -e "\e[1;33mFetching HHVM...\e[0m"
     echo
 
     mkdir dev
     cd dev
     git clone --quiet --depth 1 git://github.com/facebook/hhvm.git
+    export CMAKE_PREFIX_PATH=`pwd`
     cd hhvm
-    git submodule init > /dev/null
-    git submodule update > /dev/null
-    export CMAKE_PREFIX_PATH=`/bin/pwd`/..
-    export HPHP_HOME=`/bin/pwd`
-    export HPHP_LIB=`/bin/pwd`/bin
-    export USE_HHVM=1
+    git submodule init
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -166,14 +163,10 @@ function build() {
     echo
 
     cd hhvm
-
-    sudo locale-gen de_DE && sudo locale-gen zh_CN.utf8 && sudo locale-gen fr_FR
-    export HPHP_LIB=`pwd`/bin
-    export CMAKE_PREFIX_PATH=\`pwd\`/.. 
-    
+    git submodule update
     cmake .
     make
-    
+
     # where am i, why is it so dark
     ls & cd .. & ls
 
@@ -183,8 +176,8 @@ function build() {
 
 function install() {
     install_dependencies
-    # the hiphop source must be fetched before the libraries, because of patches
-    get_hiphop_source
+    # hhvm source fetched before libraries, because of patches
+    get_hhvm_source
       install_libevent
       install_libcurl
       install_googleglog
