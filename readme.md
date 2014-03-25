@@ -12,18 +12,13 @@ The list of required packages (dependencies) to build HHVM is extensive, while a
 - [Dependencies (HPHPFindLibs.cmake)](https://github.com/facebook/hiphop-php/blob/master/CMake/HPHPFindLibs.cmake)
 - [HHVM Issues](https://github.com/facebook/hiphop-php/issues)
 - [Building and installing HHVM on Ubuntu 12.04](https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.04)
-- [Building and installing HHVM on Ubuntu 12.10 (AWS)](https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.10-%28tested-on-AWS%29)
-
-#### Building on CentOS
-
-If you intend building HHVM on CentOS, you might take a look at https://github.com/jackywei/HOW-TO-BUILD-HHVM-WiKi
 
 ### Notes on Build Failures
 
 ### make -jN
 - I suggest to not use make -jN to build HHVM, because parallel jobs "tend to" make the build fail.
 - On the other hand, building HHVM might exceed the allowed runtime for a build job on Travis-CI, which is limited to 50 minutes.
-- To keep it under 50 minutes, we are building with "time ionice -c3 nice -n 19 make -j3". 
+- To keep it under 50 minutes, we are building with "time ionice -c3 nice -n 19 make -j3".
 - A build finishes in approximately 37 minutes.
 - The result of "time" is  (time: real 36m14.618s - user	67m9.428s - sys	4m22.474s).
 - The value "real" represents the actual elapsed time, while "user" and "sys" values represent CPU execution time.
