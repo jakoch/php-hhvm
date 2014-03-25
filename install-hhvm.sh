@@ -2,10 +2,11 @@
 shopt -s expand_aliases
 
 #
-# Building and installing HHVM
+# A build script for building HHVM on Debian based linux distributions.
 #
-# https://github.com/facebook/hiphop-php/wiki/Building-and-installing-HHVM-on-Ubuntu-12.04
+# https://github.com/jakoch/php-hhvm
 #
+
 echo
 echo -e "\e[1;32m\tBuilding and installing HHVM \e[0m"
 echo -e "\t----------------------------"
@@ -26,7 +27,6 @@ function install_dependencies() {
     # for fetching libboost 1.50
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
 
-    sudo apt-get update -y &> /dev/null
 
     sudo apt-get install git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
       libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
@@ -34,7 +34,20 @@ function install_dependencies() {
       autoconf libtool libcurl4-openssl-dev wget memcached \
       libreadline-dev libncurses-dev libmemcached-dev libbz2-dev \
       libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
-      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion &> /dev/null
+      libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion
+
+
+    # fetch libmemcached v1.0.17, because
+    # libmemcached_portability.h:35:2: error: #error libmemcached 1.0.8 is unsupported, either upgrade or downgrade
+
+    sudo add-apt-repository -y "deb http://ftp.debian.org/debian experimental main"
+    
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com AED4B06F473041FA
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 8B48AD6246925553
+
+    sudo apt-get update -y
+
+    sudo apt-get -t experimental -f install libmemcachedutil2 libmemcached11 libmemcached-dev libc6
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
@@ -52,8 +65,7 @@ function install_libevent() {
     cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1 > /dev/null
     ./autogen.sh > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -70,8 +82,7 @@ function install_libcurl() {
     cd curl
     ./buildconf > /dev/null
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -87,8 +98,7 @@ function install_googleglog() {
     svn checkout http://google-glog.googlecode.com/svn/trunk/ google-glog  > /dev/null
     cd google-glog
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install  > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -105,8 +115,7 @@ function install_jemalloc() {
     tar xjvf jemalloc-3.5.1.tar.bz2 > /dev/null
     cd jemalloc-3.5.1
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -123,8 +132,7 @@ function install_libiconv() {
     tar xvzf libiconv-1.14.tar.gz > /dev/null
     cd libiconv-1.14
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake > /dev/null
-    pmake install  > /dev/null
+    pmake && pmake install
     cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
@@ -138,8 +146,10 @@ function get_hiphop_source() {
 
     mkdir dev
     cd dev
-    git clone --quiet --depth 1 git://github.com/facebook/hiphop-php.git
-    cd hiphop-php
+    git clone --quiet --depth 1 git://github.com/facebook/hhvm.git
+    cd hhvm
+    git submodule init > /dev/null
+    git submodule update > /dev/null
     export CMAKE_PREFIX_PATH=`/bin/pwd`/..
     export HPHP_HOME=`/bin/pwd`
     export HPHP_LIB=`/bin/pwd`/bin
@@ -155,14 +165,17 @@ function build() {
     echo -e "\e[1;33mBuilding HHVM...\e[0m"
     echo
 
-    cd hiphop-php
-    git submodule init > /dev/null
-    git submodule update > /dev/null
-    export HPHP_HOME=`pwd`
+    cd hhvm
+
+    sudo locale-gen de_DE && sudo locale-gen zh_CN.utf8 && sudo locale-gen fr_FR
     export HPHP_LIB=`pwd`/bin
-    ionice -c3 nice -n 19 cmake .
-    #pmake
-    time ionice -c3 nice -n 19 make -j3
+    export CMAKE_PREFIX_PATH=\`pwd\`/.. 
+    
+    cmake .
+    make
+    
+    # where am i, why is it so dark
+    ls & cd .. & ls
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
@@ -192,22 +205,54 @@ echo -e "\e[1;32m *** Launching some basic HHVM commands as a demonstration! ***
 echo
 
 ## Display Version
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --version
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm --version
+./hphp/hhvm/hhvm --version
+hhvm --version
 
 ## Display Help
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --help
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm --help
 
 ## Getting started with Hello-World
-echo -e "<?php\n echo \"Hello Hiphop-PHP!\";\n?>" > hello.php
+echo -e "<?php\n echo 'Hello Hiphop-PHP!' . PHP_EOL;\n?>" > hello.php
 
-# Example of executing specified file
-${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php
+echo
+echo -e "\e[1;32m *** Example of executing specified file *** \e[0m"
+echo
 
-# Example of the Server Mode
-#${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm -m server -p 8123 ./
-#lynx -source http://127.0.0.1:8123/hello.php
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm hello.php
 
-# Example of parsing the specified file and dumping the AST
-#${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --parse hello.php
+echo
+echo -e "\e[1;32m *** Example of linting specified file *** \e[0m"
+echo
+
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm --lint hello.php
+
+echo
+echo -e "\e[1;32m *** Static Analyzer Report ! *** \e[0m"
+echo
+
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm --hphp -t analyze --input-list example.php --output-dir . --log 2 > report.log
+cat report.log
+
+echo
+echo -e "\e[1;32m *** Example of parsing the specified file and dumping the AST ! *** \e[0m"
+echo
+
+# uhm? > The 'parse' command line option is not supported
+#${CMAKE_PREFIX_PATH}/hiphop-php/hphp/hhvm/hhvm --file hello.php --parse
+
+echo
+echo -e "\e[1;32m *** Example of the Server Mode ! *** \e[0m"
+echo
+
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm -m server -p 8123 ./
+curl http://127.0.0.1:8123/hello.php
+
+echo
+echo -e "\e[1;32m *** Run HHVM TestSuite! *** \e[0m"
+echo
+
+# Run HHVM TestSuite
+${CMAKE_PREFIX_PATH}/hphp/hhvm/hhvm hphp/test/run all
 
 exit 0

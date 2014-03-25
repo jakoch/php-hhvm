@@ -1,9 +1,15 @@
-language: c
-compiler: gcc
-script: 
+language: cpp
+compiler:
+  - gcc
+   #- clang
+script:
   - chmod -R 777 ./install-hhvm.sh
   - ./install-hhvm.sh
-  
+
 notifications:
   irc: "irc.freenode.org#koch"
   email: false
+
+# reduce commit history of git checkout
+git:
+  depth: 25
