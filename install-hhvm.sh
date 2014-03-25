@@ -12,7 +12,7 @@ echo -e "\t----------------------------"
 echo
 
 # how many virtual processors are there?
-export NUMCPUS=`grep ^processor /proc/cpuinfo | wc -l` 
+export NUMCPUS=`grep ^processor /proc/cpuinfo | wc -l`
 
 # parallel make
 alias pmake='time ionice -c3 nice -n 19 make -j$NUMCPUS --load-average=$NUMCPUS'
@@ -27,7 +27,7 @@ function install_dependencies() {
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
 
     sudo apt-get update -y &> /dev/null
-   
+
     sudo apt-get install git-core cmake g++ libboost1.50-all-dev libmysqlclient-dev \
       libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
       libcap-dev libgd2-xpm-dev zlib1g-dev libtbb-dev libonig-dev libpcre3-dev \
@@ -101,9 +101,9 @@ function install_jemalloc() {
     echo -e "\e[1;33mInstalling jemalloc...\e[0m"
     echo
 
-    wget --quiet http://www.canonware.com/download/jemalloc/jemalloc-3.0.0.tar.bz2
-    tar xjvf jemalloc-3.0.0.tar.bz2 > /dev/null
-    cd jemalloc-3.0.0
+    wget --quiet http://www.canonware.com/download/jemalloc/jemalloc-3.5.1.tar.bz2
+    tar xjvf jemalloc-3.5.1.tar.bz2 > /dev/null
+    cd jemalloc-3.5.1
     ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
     pmake > /dev/null
     pmake install > /dev/null
@@ -177,7 +177,7 @@ function install() {
       install_googleglog
       install_jemalloc
       install_libiconv
-    build    
+    build
 }
 
 install
