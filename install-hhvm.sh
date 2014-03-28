@@ -24,11 +24,15 @@ function install_dependencies() {
     echo -e "\e[1;33mInstalling package dependencies...\e[0m"
     echo
 
-    # for fetching libboost 1.50
+    # for fetching libboost
+    sudo add-apt-repository -y ppa:boost-latest/ppa
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
+    sudo add-apt-repository -y "deb http://ftp.debian.org/debian experimental main"
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com AED4B06F473041FA
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 8B48AD6246925553
+    sudo apt-get update -y
 
-
-    sudo apt-get install git-core cmake g++ cpp gcc make libboost1.53-all-dev libmysqlclient-dev \
+    sudo apt-get install git-core cmake g++ cpp gcc make libboost1.54-all-dev libmysqlclient-dev \
       libxml2-dev libmcrypt-dev libicu-dev openssl build-essential binutils-dev \
       libcap-dev libgd2-xpm-dev zlib1g-dev libtbb-dev libonig-dev libpcre3-dev \
       autoconf libtool libcurl4-openssl-dev wget memcached \
@@ -37,37 +41,7 @@ function install_dependencies() {
       libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion \
       g++-4.7 gcc-4.7
 
-
-    # fetch libmemcached v1.0.17, because
-    # libmemcached_portability.h:35:2: error: #error libmemcached 1.0.8 is unsupported, either upgrade or downgrade
-
-    sudo add-apt-repository -y "deb http://ftp.debian.org/debian experimental main"
-
-    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com AED4B06F473041FA
-    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 8B48AD6246925553
-
-    sudo apt-get update -y
-
     sudo apt-get -t experimental -f install libmemcachedutil2 libmemcached11 libmemcached-dev libc6
-
-    echo -e "\e[1;32m> Done.\e[0m"
-    echo
-}
-
-# libevent
-function install_libevent() {
-    echo
-    echo -e "\e[1;33mInstalling libevent...\e[0m"
-    echo
-
-    git clone --quiet git://github.com/libevent/libevent.git
-    cd libevent
-    git checkout release-1.4.14b-stable  > /dev/null
-    cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1 > /dev/null
-    ./autogen.sh > /dev/null
-    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
-    pmake && pmake install
-    cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
@@ -178,7 +152,6 @@ function install() {
     install_dependencies
     # hhvm source fetched before libraries, because of patches
     get_hhvm_source
-      install_libevent
       install_libcurl
       install_googleglog
       install_jemalloc
