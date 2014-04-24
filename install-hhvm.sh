@@ -30,8 +30,8 @@ function install_dependencies() {
     # for fetching libboost
     sudo add-apt-repository -y ppa:boost-latest/ppa
     sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ quantal main universe"
-        sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com AED4B06F473041FA
-        sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 8B48AD6246925553
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com AED4B06F473041FA
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 8B48AD6246925553
     sudo add-apt-repository -y "deb http://ftp.debian.org/debian experimental main"
     sudo apt-get -y update
 
@@ -44,9 +44,28 @@ function install_dependencies() {
       libreadline-dev libncurses5-dev libbz2-dev \
       libc-client2007e-dev php5-mcrypt php5-imagick libgoogle-perftools-dev \
       libcloog-ppl0 libelf-dev libdwarf-dev libunwind7-dev libnotify-dev subversion \
-      g++-4.7 gcc-4.7
+      g++-4.7 gcc-4.7 libmagickwand-dev libxslt1-dev
 
-    sudo apt-get -t experimental -f install libmemcachedutil2 libmemcached10 libmemcached-dev libc6
+    sudo apt-get -t experimental -f install libmemcachedutil2 libmemcached11 libmemcached-dev libc6
+
+    echo -e "\e[1;32m> Done.\e[0m"
+    echo
+}
+
+# libevent
+function install_libevent() {
+    echo
+    echo -e "\e[1;33mInstalling libevent...\e[0m"
+    echo
+
+    git clone --quiet git://github.com/libevent/libevent.git
+    cd libevent
+    git checkout release-1.4.14b-stable  > /dev/null
+    cat ../hiphop-php/hphp/third_party/libevent-1.4.14.fb-changes.diff | patch -p1 > /dev/null
+    ./autogen.sh > /dev/null
+    ./configure --prefix=$CMAKE_PREFIX_PATH > /dev/null
+    pmake && pmake install
+    cd ..
 
     echo -e "\e[1;32m> Done.\e[0m"
     echo
@@ -142,7 +161,7 @@ function build() {
     echo
 
     cd hhvm
-    git submodule update
+    git submodule update --init --recursive
     cmake .
     pmake
 
@@ -157,6 +176,7 @@ function install() {
     install_dependencies
     # hhvm source fetched before libraries, because of patches
     get_hhvm_source
+      install_libevent
       install_libcurl
       install_googleglog
       install_jemalloc
